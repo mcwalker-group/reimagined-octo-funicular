@@ -48,5 +48,22 @@ Identifying potential precursor peptides in class I clusters
 16) Calculate score for peptides (+5 for svm classification, +5 for match with leader meme, +2 for core pI less than 9, +2 for 2 or more Cys in core, +1 if leader ends in GG)
 17) If peptide score is greater than 10, it is predicted to be a precursor peptide
   
-
+Identifying potential precursor peptides in class II clusters
+1) Edit make-fasta.py so fh = open(<classI-potential precursor peptides file.csv from previous step>)
+2) Execute make-fasta.py, note results are put to stdout
+3) Execute fimo classI_leader-meme.txt <classI potential precursor peptides fasta file>
+4) Copy fimo.tsv from created directory to current directory
+5) Execute get_params_classI.py <classI-potential precursor peptides file.csv> <classI-peps-params.csv>
+6) Edit select-features.py so fh2 = open(<classI-peps-params.csv>)
+7) Execute select-features.py
+8) Execute classI_svm_classify.py
+9) Execute fimo-compile.py
+10) Open classI-peps-params.csv with excel
+11) Delete the columns with the amino acid pairs feature columns
+12) Open classI-peps-fimo-scores.csv with excel
+13) Copy fimo scores and paste into the params file
+14) Open classI-peps-classification.csv 
+15) Copy classifications and paste into params file
+16) Calculate score for peptides (+5 for svm classification, +5 for match with leader meme, +2 for core pI less than 9, +2 for 2 or more Cys in core, +1 if leader ends in GG)
+17) If peptide score is greater than 10, it is predicted to be a precursor peptide
 
