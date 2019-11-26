@@ -30,7 +30,7 @@ Extracting potential lanthipeptide biosynthetic gene clusters
 9) Execute pull-classes.py, note results are put to stdout
 
 Identifying potential precursor peptides in class I clusters
-1) Edit make-fasta.py so fh = open(<classI-potential precursor peptides file.csv from previous step>)
+1) Edit make-fasta.py so fh = open(<classI-potential precursor peptides file.csv from extracting potential clusters>)
 2) Execute make-fasta.py, note results are put to stdout
 3) Execute fimo classI_leader-meme.txt <classI potential precursor peptides fasta file>
 4) Copy fimo.tsv from created directory to current directory
@@ -49,21 +49,27 @@ Identifying potential precursor peptides in class I clusters
 17) If peptide score is greater than 10, it is predicted to be a precursor peptide
   
 Identifying potential precursor peptides in class II clusters
-1) Edit make-fasta.py so fh = open(<classI-potential precursor peptides file.csv from previous step>)
+1) Edit make-fasta.py so fh = open(<classII-potential precursor peptides file.csv from extracting potential clusters>)
 2) Execute make-fasta.py, note results are put to stdout
-3) Execute fimo classI_leader-meme.txt <classI potential precursor peptides fasta file>
+3) Execute fimo classII_leader-meme_20190503.txt <classII potential precursor peptides fasta file>
 4) Copy fimo.tsv from created directory to current directory
-5) Execute get_params_classI.py <classI-potential precursor peptides file.csv> <classI-peps-params.csv>
-6) Edit select-features.py so fh2 = open(<classI-peps-params.csv>)
-7) Execute select-features.py
-8) Execute classI_svm_classify.py
-9) Execute fimo-compile.py
-10) Open classI-peps-params.csv with excel
-11) Delete the columns with the amino acid pairs feature columns
-12) Open classI-peps-fimo-scores.csv with excel
-13) Copy fimo scores and paste into the params file
-14) Open classI-peps-classification.csv 
-15) Copy classifications and paste into params file
-16) Calculate score for peptides (+5 for svm classification, +5 for match with leader meme, +2 for core pI less than 9, +2 for 2 or more Cys in core, +1 if leader ends in GG)
-17) If peptide score is greater than 10, it is predicted to be a precursor peptide
+5) Execute hmmscan -o leader-hmm.out --tblout leader-hmm.tbl classII-precursors.hmm classII-peps.fa
+6) Execute get_params_classII.py <classII-potential precursor peptides file.csv> <classII-peps-params.csv>
+7) Edit select-features.py so fh2 = open(<classII-peps-params.csv>)
+8) Execute select-features.py
+9) Execute classII_svm_classify.py
+10) Execute fimo-compile.py
+11) Execute hmmer-compile.py
+12) Open classI-peps-params.csv with excel
+13) Delete the columns with the amino acid pairs feature columns
+14) Open classI-peps-fimo-scores.csv with excel
+15) Copy fimo scores and paste into the params file
+16) Open classI-peps-classification.csv 
+17) Copy classifications and paste into params file
+18) Open classII-peps-HMM.csv in excel
+19) Copy HMM scores into params file
+20) Calculate score for peptides (+5 for svm classification, +5 for match with leader meme, +5 for match with precursor HMM, +2 for 2 or more Cys in core, +4 if core ends in KRC)
+21) If peptide score is greater than 10, it is predicted to be a precursor peptide
+
+
 
